@@ -1,0 +1,23 @@
+.cadastro{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.campoCadastro{
+    margin-top: 8%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 30%;
+    padding: 5em;
+    border-radius: 2em;
+    background-color: rgba(0, 0, 0, 0.6);
+    p{
+        color: #ccc;
+        width: 80%;
+        display: flex;
+        justify-content: space-between;
+        
+    }
+}
