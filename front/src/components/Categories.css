@@ -1,0 +1,14 @@
+.categories{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+    padding: 2rem;
+    .category-card{
+        color: white;
+        font-weight: bold;
+        background-color: rgba(0, 10, 10, 0.7);
+        padding: 1rem;
+        border-radius: 1rem;
+    }
+}

@@ -7,6 +7,7 @@ import { Cadastro } from './pages/Cadastro.jsx';
 import { Login } from './pages/Login.jsx';
 import { MainPage } from './pages/MainPage.jsx';
 import AnimePage from './pages/AnimePage.jsx';
+import { Category } from './pages/Category.jsx';
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
   {
     path: '/animeDetail',
     element: <AnimePage />
+  },
+  {
+    path: '/category',
+    element: <Category />
   }
 ])
 
