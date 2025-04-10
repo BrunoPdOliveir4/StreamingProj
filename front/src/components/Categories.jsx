@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import "./Categories.css"; 
+import { useNavigate } from "react-router-dom";
 export const Categories = () => {
     const [category, setCategory] = useState([]);
 
@@ -13,14 +14,14 @@ export const Categories = () => {
             console.error("Error fetching category data:", error);
         }
     };
-
+    const navigate = useNavigate();
     useEffect(() => {
         fetchCategory();   
     }, []); 
     return (
         <div className="categories">
             {category.map((cat) => (
-                <div key={cat.mal_id} className="category-card">
+                <div key={cat.mal_id} className="category-card" onClick={() => navigate(`/category?id=${cat.mal_id}`)}>
                     <h2>{cat.name}</h2>
                     <p>{cat.count} animes</p>
                 </div>

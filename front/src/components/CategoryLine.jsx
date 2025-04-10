@@ -3,7 +3,7 @@ export const CategoryLine = () => {
     return (
         <div className='headerCategory'>
             <div>  
-                <a href='/category'>
+                <a href='/categories'>
                     Categories
                 </a>
             </div>

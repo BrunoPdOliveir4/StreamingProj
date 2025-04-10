@@ -1,8 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import "./AnimesGrid.css";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const AnimesGrid = () => {
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const genderId = queryParams.get('id');
     const [anime, setAnime] = useState([]);
     const [page, setPage] = useState(1);
     const [loading, setLoading] = useState(false);
@@ -16,16 +19,26 @@ const AnimesGrid = () => {
     const fetchAnime = async () => {
         try {
             setLoading(true);
-            const response = await fetch(`https://api.jikan.moe/v4/anime?page=${page}`);
+            let url = `https://api.jikan.moe/v4/anime?page=${page}`;
+            if (genderId) {
+                url += `&genres=${genderId}`;
+            }
+            const response = await fetch(url);
             const data = await response.json();
-            setAnime(prev => [...prev, ...data.data]);
+        
+            if (Array.isArray(data.data)) {
+                setAnime(prev => [...prev, ...data.data]);
+            } else {
+                console.warn("Expected data.data to be an array, but got:", data.data);
+            }
         } catch (error) {
             console.error("Error fetching anime data:", error);
         } finally {
             setLoading(false);
         }
     };
-
+    
+    
     useEffect(() => {
         fetchAnime();
     }, [page]);

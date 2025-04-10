@@ -8,6 +8,7 @@ import { Login } from './pages/Login.jsx';
 import { MainPage } from './pages/MainPage.jsx';
 import AnimePage from './pages/AnimePage.jsx';
 import { Category } from './pages/Category.jsx';
+import { CategoryPage } from './pages/CategoryPage.jsx';
 
 const router = createBrowserRouter([
   {
@@ -31,8 +32,12 @@ const router = createBrowserRouter([
     element: <AnimePage />
   },
   {
-    path: '/category',
+    path: '/categories',
     element: <Category />
+  },
+  {
+    path: '/category',
+    element: <CategoryPage />
   }
 ])
 
