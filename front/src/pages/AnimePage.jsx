@@ -18,7 +18,7 @@ const AnimePage = () => {
             setError(null);
 
             try {
-                const res = await axios.get(`https://api.jikan.moe/v4/anime/${id}`);
+                const res = await axios.get(`https://api.jikan.moe/v4/anime/${id}/full`);
                 setAnime(res.data.data);
                 setLoading(false); 
                 console.log(res.data.data); 
@@ -44,7 +44,7 @@ const AnimePage = () => {
     }
 
     return (
-        <div style={{ backgroundColor: '#1f1f1f', height: '100vh' }}>
+        <div style={{ backgroundColor: '#1f1f1f' }}>
             <MHeader/>
             <AnimeInfos anime={anime} />
         </div>

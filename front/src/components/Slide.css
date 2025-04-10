@@ -2,6 +2,19 @@
     background-color: rgba(0, 0, 0, 0.7);
     padding: 2em;
 }
+.slide:hover{
+    background-color: #111;
+    
+    img{
+        transform: scale(1.05); /* Scale effect on hover */
+        cursor: pointer; /* Pointer cursor on hover */
+    }
+    .title{
+        color:red;
+        font-weight: bold;
+    }
+    transition: transform 0.3s ease; /* Smooth scaling effect */
+}
 .slide img {
     width: 450px;  
     height: 400px; 
