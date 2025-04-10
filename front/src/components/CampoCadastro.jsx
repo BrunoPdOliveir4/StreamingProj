@@ -23,7 +23,7 @@ export const CampoCadastro = () => {
                         }}></input>Aceito os <a>TERMOS DE USO</a></label>
                     </p>
                     <button id="cadastro" disabled={disagreded}>Cadastrar</button>
-                    <p><a onClick={() => {navigate('/login')}}>fazer login</a></p>
+                    <p><a onClick={() => {navigate('/login')}}>Fazer login</a></p>
             </div>
         </div>
     )
