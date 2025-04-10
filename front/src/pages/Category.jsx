@@ -6,9 +6,8 @@ export const Category = () => {
     
 
     return (
-        <div>
+        <div style={{ backgroundColor: '#1f1f1f' }}>
             <MHeader/>
-            <h2>Categories</h2>
             <Categories/>
         </div>
     );

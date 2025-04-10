@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom"
+import { CategoryLine } from "./CategoryLine";
 
 function MHeader(){
     const navigate = useNavigate();
@@ -13,6 +14,7 @@ function MHeader(){
                 </div>
                 <button onClick={()=>{navigate('/')}}>Logout</button>
             </header>
+            <CategoryLine/>
         </div>
     )
 }
