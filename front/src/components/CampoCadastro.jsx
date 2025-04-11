@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import './PopUp.css';
+import Popup from "./Popup.jsx"; 
 
 export const CampoCadastro = () => {
   const navigate = useNavigate();
@@ -37,15 +38,30 @@ export const CampoCadastro = () => {
         <h2 style={{ color: "#ccc", margin: 0 }}>Cadastro de Usuário</h2>
 
         <p>Email
-          <input type="text" placeholder="Digite seu Email" value={email} onChange={e => setEmail(e.target.value)} />
+          <input
+            type="text"
+            placeholder="Digite seu Email"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+          />
         </p>
 
         <p>Senha
-          <input type="password" placeholder="Insira sua senha" value={senha} onChange={e => setSenha(e.target.value)} />
+          <input
+            type="password"
+            placeholder="Insira sua senha"
+            value={senha}
+            onChange={e => setSenha(e.target.value)}
+          />
         </p>
 
         <p>Repetir senha
-          <input type="password" placeholder="Repita sua senha" value={senhaConfirmada} onChange={e => setSenhaConfirmada(e.target.value)} />
+          <input
+            type="password"
+            placeholder="Repita sua senha"
+            value={senhaConfirmada}
+            onChange={e => setSenhaConfirmada(e.target.value)}
+          />
         </p>
 
         <p>
@@ -58,7 +74,11 @@ export const CampoCadastro = () => {
           </label>
         </p>
 
-        <button id="cadastro" disabled={!termosAceitos} onClick={handleCadastro}>
+        <button
+          id="cadastro"
+          disabled={!termosAceitos}
+          onClick={handleCadastro}
+        >
           Cadastrar
         </button>
 
@@ -70,9 +90,11 @@ export const CampoCadastro = () => {
       </div>
 
       {popup && (
-        <div className={`popup ${popup.type}`}>
-          {popup.message}
-        </div>
+        <Popup
+          message={popup.message}
+          type={popup.type}
+          onClose={() => setPopup(null)}
+        />
       )}
     </div>
   );
