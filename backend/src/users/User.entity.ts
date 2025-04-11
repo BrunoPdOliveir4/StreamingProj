@@ -1,6 +1,7 @@
 import { Column, Entity, ObjectIdColumn } from 'typeorm';
 import { ObjectId } from 'mongodb';
-import bcrypt from 'bcrypt';
+import * as bcrypt from 'bcrypt';
+
 
 @Entity()
 export class User {

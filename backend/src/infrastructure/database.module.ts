@@ -1,26 +1,15 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AuthModule } from './auth/auth.module';
-import { UserModule } from '../users/User.module';
-
-import { ConfigModule } from '@nestjs/config';
+import { User } from 'src/users/User.entity'; 
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: '127.0.0.1',
-      port: 3306,
-      username: 'nestuser',
-      password: 'Admin123',
-      database: 'todolist',
-      entities: [__dirname + '/../**/*.entity{.ts,.js}'],
+      type: 'mongodb',
+      url: 'mongodb://localhost:27017/nest_db',
+      entities: [User],
       synchronize: true,
     }),
-    UserModule,
-    AuthModule,
-
   ],
 })
 export class DatabaseModule {}
