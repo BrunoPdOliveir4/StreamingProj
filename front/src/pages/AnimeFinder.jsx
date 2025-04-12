@@ -1,13 +1,16 @@
 import { useState } from 'react';
 import MHeader from '../components/MHeader.jsx';
+import { useNavigate } from 'react-router-dom';
 
 export const AnimeFinder = () => {
   const [imageUrl, setImageUrl] = useState('');
   const [videoUrl, setVideoUrl] = useState(null);
   const [loading, setLoading] = useState(false);
   const [anilistId, setAnilistId] = useState(null);
-  const [episode, setEpisode] = useState(null);
   const [error, setError] = useState('');
+  const [animeInfo, setAnimeInfoDiv] = useState('none');
+  const [episode, setEpisode] = useState(null);
+  const navigate = useNavigate();
 
   const handleSearch = async () => {
     if (!imageUrl) return;
@@ -25,6 +28,7 @@ export const AnimeFinder = () => {
         setVideoUrl(data.result[0].video);
         setAnilistId(data.result[0].anilist);
         setEpisode(data.result[0].episode);
+        setAnimeInfoDiv('block');
       } else {
         setError('No results found.');
       }
@@ -35,7 +39,9 @@ export const AnimeFinder = () => {
       setLoading(false);
     }
   };
-
+  const handleClick = (id) => {
+    navigate(`/animeDetail?id=${id}`, { state: { id } });
+    };
   return (
     <div style={{ backgroundColor: '#1f1f1f', color: 'white', minHeight: '100vh' }}>
       <MHeader />
@@ -73,10 +79,12 @@ export const AnimeFinder = () => {
           </video>
         </div>
       )}
-      <p>
-        id: {anilistId}
-        episódio: {episode}
-      </p>
+      <div style={{ display: animeInfo, marginTop: '2rem' }}>
+        <h3>Anime Information:</h3>
+        <p>Episode: {episode}</p>
+        <p>Anilist ID: {anilistId}</p>
+        <button  onClick={() => handleClick(anilistId)}>Ir para o anime</button>
+      </div>
     </div>
   );
 };
