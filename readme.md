@@ -60,3 +60,8 @@ I’m exploring integration with a **scene recognition API** that identifies ani
 > This project is a work in progress and a personal learning journey. It aims to balance the excitement of anime discovery with clean code architecture and respect for copyright law.
 
 Contributions, feedback, or suggestions are always welcome! 🚀
+
+## Next Steps
+
+This project have plans of using TraceMoe API to find animes.
+To make it possible, we shall need to find similar images and cross requests to have a bigger precision because it is not possible to be 100% confident with TraceMoe results yet.
