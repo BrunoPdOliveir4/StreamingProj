@@ -6,6 +6,9 @@ export const CategoryLine = () => {
                 <a href='/categories'>
                     Categories
                 </a>
+                <a href="/animeFinder">
+                    Anime Finder
+                </a>
             </div>
         </div>
     )
