@@ -51,22 +51,25 @@ export class UserService {
     }
     return user;
   }
-
-  async create(email: string, password: string): Promise<User> {
-    this.emailValidation(email);
-
+  async create(data: { email: string; password: string }): Promise<User> {
+    const { email, password } = data;
+  
+    if (!email) throw new BadRequestException('Email is required');
     if (!password) throw new BadRequestException('Password is required');
-    if (await this.userRepository.findOneByEmail(email))
-      throw new ConflictException('Email already in use');
-
-    const newUser = new User(email);
-    const salt = newUser.getSalt();
-    const hashedPassword = bcrypt.hashSync(password, salt);
-    newUser.setPassword(hashedPassword);
-
-    return this.userRepository.create(newUser);
+    this.emailValidation(email);
+  
+    const existing = await this.userRepository.findOneByEmail(email);
+    if (existing) throw new ConflictException('Email already in use');
+  
+    const user = new User(email);
+    const salt = user.getSalt();
+    const hashedPassword = await bcrypt.hash(password, salt);
+    user.setPassword(hashedPassword);
+  
+    return this.userRepository.create(user);
   }
-
+  
+  
   async update(id: string, updatedUser: UpdateUserDTO): Promise<User> {
     const userToUpdate = await this.findOne(id);
 

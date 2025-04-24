@@ -23,15 +23,18 @@ export class AuthService {
     if (!user) {
       throw new NotFoundException('User not found');
     }
-    const password = await bcrypt.hash(pass, user.getSalt());
-    if (await bcrypt.compare(password, user.getPassword())) {
-      throw new UnauthorizedException();
+  
+    const isPasswordValid = await bcrypt.compare(pass, user.getPassword());
+    if (!isPasswordValid) {
+      throw new UnauthorizedException('Invalid credentials');
     }
+  
     const payload = { sub: user.getId(), email: user.getEmail() };
     return {
       access_token: await this.jwtService.signAsync(payload),
     };
   }
+  
   async decryptToken(token: string): Promise<token> {
     try {
       return await this.jwtService.verifyAsync(token);

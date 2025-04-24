@@ -2,32 +2,29 @@ import {Controller, Get, Post, Put, Delete, Body, Param, HttpException, HttpStat
 } from "@nestjs/common";
 import * as bcrypt from "bcrypt";
 import { User } from "./User.entity";
+import { UserService } from "./User.service";
 
 @Controller("user")
 export class UserController {
   private users: User[] = [];
   private idCounter = 1;
+  constructor(private readonly userService: UserService) {}
 
   @Post()
-  async createUser(
-    @Body() body: { name: string; email: string; password: string },
-  ) {
-    const { email, password } = body;
+  @Post()
+async createUser(
+  @Body() body: { email: string; password: string },
+): Promise<User> {
+  const { email, password } = body;
 
-    // Validate email with regex
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      throw new HttpException("Invalid email format", HttpStatus.BAD_REQUEST);
-    }
-
-    const newUser: User = new User(email);
-
-    newUser.setPassword(await bcrypt.hash(password, newUser.getSalt()));
-    this.users.push(newUser);
-    return {
-      message: "User created successfully"
-    };
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    throw new HttpException("Invalid email format", HttpStatus.BAD_REQUEST);
   }
+
+  return this.userService.create({ email, password }); // passa como DTO
+}
+
 
   @Get(":id")
   getUserById(@Param("id") id: number) {
