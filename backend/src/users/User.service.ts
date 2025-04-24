@@ -9,7 +9,7 @@ import { User } from './User.entity';
 import { UserRepository } from './User.repository';
 import { JwtService } from '@nestjs/jwt';
 import { token } from 'src/infrastructure/auth/auth.service';
-import bcrypt from 'bcrypt';
+import * as bcrypt from 'bcrypt';
 import { UpdateUserDTO } from 'src/dto/updateUser.dto';
 
 @Injectable()
@@ -63,7 +63,7 @@ export class UserService {
   
     const user = new User(email);
     const salt = user.getSalt();
-    const hashedPassword = await bcrypt.hash(password, salt);
+    const hashedPassword = bcrypt.hashSync(password, salt);
     user.setPassword(hashedPassword);
   
     return this.userRepository.create(user);
