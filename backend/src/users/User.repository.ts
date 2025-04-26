@@ -6,6 +6,9 @@ import { ObjectId } from 'mongodb';
 
 @Injectable()
 export class UserRepository {
+  save(user: User) {
+    throw new Error("Method not implemented.");
+  }
   constructor(
     @InjectRepository(User)
     private readonly repo: Repository<User>,

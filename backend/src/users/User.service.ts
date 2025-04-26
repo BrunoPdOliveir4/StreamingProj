@@ -11,9 +11,13 @@ import { JwtService } from '@nestjs/jwt';
 import { token } from 'src/infrastructure/auth/auth.service';
 import * as bcrypt from 'bcrypt';
 import { UpdateUserDTO } from 'src/dto/updateUser.dto';
+import * as nodemailer from 'nodemailer';
 
 @Injectable()
 export class UserService {
+  remove(id: number) {
+    throw new Error("Method not implemented.");
+  }
   constructor(
     private readonly userRepository: UserRepository,
     private jwtService: JwtService,
@@ -53,11 +57,7 @@ export class UserService {
   }
   async create(data: { email: string; password: string }): Promise<User> {
     const { email, password } = data;
-  
-    if (!email) throw new BadRequestException('Email is required');
-    if (!password) throw new BadRequestException('Password is required');
-    this.emailValidation(email);
-  
+
     const existing = await this.userRepository.findOneByEmail(email);
     if (existing) throw new ConflictException('Email already in use');
   
@@ -65,9 +65,46 @@ export class UserService {
     const salt = user.getSalt();
     const hashedPassword = bcrypt.hashSync(password, salt);
     user.setPassword(hashedPassword);
+    
+    const token = this.jwtService.sign(
+      { email: email },
+      { secret: 'SECRET', expiresIn: '1h' },
+    );
+    if (!email) throw new BadRequestException('Email is required');
+    if (!password) throw new BadRequestException('Password is required');
+    this.emailValidation(email);
+  
+    const url = `http://localhost:3000/auth/verify-email?token=${token}`;
+
+    // Envia o e-mail (com nodemailer)
+    await this.sendEmail(user.email, url);
+
   
     return this.userRepository.create(user);
   }
+
+  async sendEmail(to: string, link: string) {
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'seu-email@gmail.com',
+        pass: 'sua-senha',
+      },
+    });
+
+    await transporter.sendMail({
+      from: '"App" no-reply.validation@assistircomvoce.com>',
+      to,
+      subject: 'Confirme seu e-mail',
+      html: `<p>Confirme seu e-mail clicando <a href="${link}">aqui</a>.</p>`,
+    });
+  }
+
+
+
+
+
+
   
   
   async update(id: string, updatedUser: UpdateUserDTO): Promise<User> {

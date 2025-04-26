@@ -21,6 +21,9 @@ export class User {
   private updatedAt: Date;
 
   @Column()
+  private isVerified: boolean;
+
+  @Column()
   private salt: string;
 
   constructor(email?: string) {
@@ -60,5 +63,9 @@ export class User {
 
   setPassword(password: string): void {
     this.password = password;
+  }
+
+  setIsVerified(isVerified: boolean): void {
+    this.isVerified = isVerified;
   }
 }
