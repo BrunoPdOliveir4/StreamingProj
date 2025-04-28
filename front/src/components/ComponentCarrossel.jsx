@@ -30,8 +30,7 @@ const ComponentCarrossel = () => {
         
         
         fetchImages();
-    }, []); // Runs only once when component mounts
-
+    }, []);
     return (
         <div className="carrossel-container">
             <Splide
